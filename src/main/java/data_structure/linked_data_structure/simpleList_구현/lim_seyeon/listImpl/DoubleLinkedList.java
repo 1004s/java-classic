@@ -1,17 +1,19 @@
 package data_structure.linked_data_structure.simpleList_구현.lim_seyeon.listImpl;
 
-
+import data_structure.linked_data_structure.simpleList_구현.lim_seyeon.SimpleIterable;
 import data_structure.linked_data_structure.simpleList_구현.lim_seyeon.SimpleList;
+import data_structure.linked_data_structure.simpleList_구현.lim_seyeon.SimpleListIterator;
 
 import java.util.NoSuchElementException;
 
-public class DoubleLinkedList implements SimpleList {
+public class DoubleLinkedList implements SimpleList, SimpleIterable {
 
     protected static class Node {
+
         int data;
+
         Node prev;
         Node next;
-
         protected Node(int data) {
             this.data = data;
         }
@@ -26,11 +28,11 @@ public class DoubleLinkedList implements SimpleList {
             this.prev = prev;
             this.next = next;
         }
+
     }
-
     protected int size;
-    protected Node head;
 
+    protected Node head;
     @Override
     public boolean isEmpty() {
         return size == 0;
@@ -99,6 +101,7 @@ public class DoubleLinkedList implements SimpleList {
 
     // data == p.data인 최초의 노드 p의 인덱스를 반환
     // data == p.data인 노드가 없다면 -1을 반환
+
     private int getFirstIndex(int data) {
         Node p = head;
         int idx = 0;
@@ -110,10 +113,57 @@ public class DoubleLinkedList implements SimpleList {
         }
         return -1;
     }
-
     @Override
     public int size() {
         return size;
     }
 
+
+    @Override
+    public SimpleListIterator iterator() {
+        return new SimpleListIterator() {
+
+            Node p = head;
+
+            @Override
+            public boolean hasNext() {
+                return p != null;
+            }
+
+            @Override
+            public int next() {
+                final int data = p.data;
+                p = p.next;
+                return data;
+            }
+
+            @Override
+            public boolean hasPrevious() {
+                return p.prev != null;
+            }
+
+            @Override
+            public int previous() {
+                p = p.prev;
+                return p.data;
+            }
+
+            // 다음 요소 삭제
+            @Override
+            public void remove() {
+                if(hasNext()) {
+                    if(p == head) {
+                        head = p.next;
+                    } else {
+                        p.prev.next = p.next;
+                        if (p.next != null) {
+                            p.next.prev = p.prev;
+                        }
+                    }
+                    p = p.next;
+                    size--;
+                }
+            }
+        };
+    }
 }

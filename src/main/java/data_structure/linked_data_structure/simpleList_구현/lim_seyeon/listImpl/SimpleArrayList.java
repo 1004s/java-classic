@@ -1,6 +1,5 @@
 package data_structure.linked_data_structure.simpleList_구현.lim_seyeon.listImpl;
 
-
 import data_structure.linked_data_structure.simpleList_구현.lim_seyeon.SimpleIterable;
 import data_structure.linked_data_structure.simpleList_구현.lim_seyeon.SimpleList;
 import data_structure.linked_data_structure.simpleList_구현.lim_seyeon.SimpleListIterator;
@@ -106,7 +105,10 @@ public class SimpleArrayList implements SimpleList, SimpleIterable {
             // 요구사항: 다음 요소 삭제
             @Override
             public void remove() {
-                // TODO
+                if(hasNext()) {
+                    System.arraycopy(elements, nextCursor + 1, elements, nextCursor, (size - nextCursor - 1));
+                    size--;
+                }
             }
         };
     }

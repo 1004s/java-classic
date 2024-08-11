@@ -1,12 +1,14 @@
 package data_structure.linked_data_structure.simpleList_구현.lim_seyeon.listImpl;
 
+import data_structure.linked_data_structure.simpleList_구현.lim_seyeon.SimpleIterable;
 import data_structure.linked_data_structure.simpleList_구현.lim_seyeon.SimpleList;
-
+import data_structure.linked_data_structure.simpleList_구현.lim_seyeon.SimpleListIterator;
 import java.util.NoSuchElementException;
 
-public class SimpleLinkedList implements SimpleList {
+public class SimpleLinkedList implements SimpleList, SimpleIterable {
 
     private static class Node {
+
         int data;
         Node next;
 
@@ -95,6 +97,7 @@ public class SimpleLinkedList implements SimpleList {
 
     // data == p.data인 최초의 노드 p의 인덱스를 반환
     // data == p.data인 노드가 없다면 -1을 반환
+
     private int getFirstIndex(int data) {
         Node p = head;
         int idx = 0;
@@ -106,10 +109,49 @@ public class SimpleLinkedList implements SimpleList {
         }
         return -1;
     }
-
     @Override
     public int size() {
         return size;
     }
 
+    @Override
+    public SimpleListIterator iterator() {
+        return new SimpleListIterator() {
+
+            Node nextNode = head;
+            Node prevNode = null;
+
+            @Override
+            public boolean hasNext() {
+                return nextNode != null;
+            }
+
+            @Override
+            public int next() {
+                final int data = nextNode.data;
+                prevNode = nextNode;
+                nextNode = nextNode.next;
+                return data;
+            }
+
+            @Override
+            public boolean hasPrevious() {
+                return prevNode != null;
+            }
+
+            @Override
+            public int previous() {
+                throw new UnsupportedOperationException();
+            }
+
+            // 다음 요소 삭제
+            @Override
+            public void remove() {
+                if(hasNext()) {
+                    prevNode.next = nextNode.next;
+                    size--;
+                }
+            }
+        };
+    }
 }
