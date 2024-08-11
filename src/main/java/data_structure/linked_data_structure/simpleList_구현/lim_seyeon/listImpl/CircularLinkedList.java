@@ -10,7 +10,7 @@ public class CircularLinkedList extends DoubleLinkedList {
             return;
         }
         Node p = head;
-        while(p.next != null) {
+        while(p.next != null && p.next != head) {
             p = p.next;
         }
         p.next = new Node(data, p, p.next);
