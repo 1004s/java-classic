@@ -1,4 +1,4 @@
-package data_structure.linked_data_structure.lim_seyeon;
+package data_structure.linked_data_structure.static_메서드_구현.lim_seyeon;
 
 
 import java.util.NoSuchElementException;

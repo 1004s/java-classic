@@ -1,4 +1,4 @@
-package data_structure.linked_data_structure.yoon_insub;
+package data_structure.linked_data_structure.static_메서드_구현.yoon_insub;
 
 import java.util.NoSuchElementException;
 import java.util.Objects;
